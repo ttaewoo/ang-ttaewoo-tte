@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>태우의 홈페이지</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link href="https://fonts.googleapis.com/css?family=Do+Hyeon" rel="stylesheet">
+		<link rel="stylesheet" href="css/index.css" />
+		<link rel="stylesheet" href="css/muzic.css" />
+	</head>
+	<body>
+		<div class="header">
+			<h1>RTS(전략게임)</h1>
+			<p></p>
+		</div>
+		<div class="nav_bar">
+			<a href="index.html">HOME</a>
+			<a href="page1.html">RTS게임</a>
+			<a href="lol.html">리그오브레전드</a>
+			<a href="page3.html">스타크래프트</a>
+			<a href="page4.html">클래시오브클랜</a>
+			<a href="page5.html">클래시로얄</a>
+			<a href="music.html">음악만들기</a>
+		</div>
+		<div class="content">
+			<div class="side">
+				<div>
+					--RTS란?--
+				</div>
+				<div>
+					
+					<br>
+					 RTS(Real-time strategy, 실시간전략게임)는 실시간으로 진행되는 전략 게임을 뜻한다. <br>
+					 <br>
+					  일반적으로 자원을 채취하고, 그 자원으로 건물을 짓거나 병력을 생산하고, 문명을 발전시키거나 전쟁에서 승리하면 끝나는 전략 게임의 형태를 따르고 있다. <br>
+					<br>
+					하지만 실시간으로 진행되기 때문에 빠른 손놀림과 판단력이 승부에 큰 영향을 미치게 되고, 이에 따라 다른 게임에 비해 클릭이나 드래그와 같은 마우스 조작이 많이 사용된다는 특징이 있다. <br>
+
+				</div>
+			</div>
+			<div class="main">
+				<!--이 안에 뮤직 코드가 들어감-->
+				<div id="app" @mouseUp="unselectKnobs">
+				    <div class="knob-container">
+				      <div class="rela-block container">
+				        <div v-for="effect in effects" class="rela-inline effect-container" @mouseDown="effect.selected = true;">
+				          <div class="rela-block effect-label">
+				            <div class="rela-inline effect-active-light" :style="{'background-color': effect.active?effect.color:'#888'}" @click="effect.active = !effect.active"></div>
+				            {{effect.label}}
+				          </div>
+				          <div class="rela-block knob-container">
+				            <div v-for="knob in effect.knobs" :class="['rela-inline', 'knob', 'style'+effect.knobStyle]">
+				              <div class="rela-block knob-dial" :style="{'color':effect.active?effect.color:'#888'}">
+				                <div class="abs-center dial-grip" :style="{'transform': 'translate(-50%,-50%) rotate('+knob.rotation+'deg)'}" @mouseDown.prevent="selectKnob(knob, $event);"></div>
+				                <svg class="dial-svg" viewBox="0 0 100 100">
+				  <path d="M20,76 A 40 40 0 1 1 80 76" fill="none" stroke="#55595C"/>
+				  <path d="M20,76 A 40 40 0 1 1 80 76" fill="none" :stroke="effect.active?effect.color:'#888'" 
+				  :style="{'stroke-dashoffset':184 - 184*((knob.rotation*1 + 132)/264)}"/>
+				  </svg>
+				              </div>
+				              <div class="rela-block knob-label" :style="{'color':effect.active?'#E4E8EA':'#888'}">{{knob.label}}</div>
+				            </div>
+				          </div>
+				        </div>
+				      </div>
+				    </div>
+				    <div id="sequencer">
+				      <div id="buttons">
+				        <button v-on:click="start" :disabled="isPlaying">▶️ Start</button>
+				        <button v-on:click="stop" :disabled="!isPlaying">⏹ Stop</button>
+				        <button v-on:click="rewind">⏪ Rewind</button>
+				        <button v-on:click="clear">🗑 Clear</button>
+				        <select v-model="oscillatorType">
+				          <option>sine</option>
+				          <option>square</option>
+				          <option>sawtooth</option>
+				          <option>triangle</option>
+				        </select>
+				      </div>
+				      <div v-for="(row, rowIndex) in notes">
+				        <span v-for="(note, noteIndex) in row">
+				          <label>
+				            <input type="checkbox" v-model="note.value" />
+				            <span :class="current === noteIndex ? 'current' : ''"></span>
+				          </label>
+				        </span>
+				      </div>
+				    </div>
+				  </div>
+				  
+				
+
+
+
+
+
+			</div>
+		</div>
+		<div class="footer">
+			나는 6학년 4반 김태우다.흐흐흐흐흐흐<br>
+		</div>
+
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.min.js"></script>
+		<script src="js/music.js"></script>
+		<script type="text/javascript" src="js/lol.js"></script>
+	</body>
+</html>
+
